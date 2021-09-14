@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unit_converter/category/category_item.dart';
 import 'package:unit_converter/utils/constants.dart';
 
 class CategoryPage extends StatelessWidget {
@@ -9,19 +10,14 @@ class CategoryPage extends StatelessWidget {
           title: Text(Constants.categoryTitle),
         ),
         body: Container(
-            child: GridView.count(
-          crossAxisCount: 2,
-          childAspectRatio: 1/2,
+          margin: EdgeInsets.all(8.0),
+          child: GridView.count(
+          crossAxisCount: 1,
+          childAspectRatio: 1/0.5,
           children: <Widget>[
-            Container(color:Colors.red),
-            Container(color:Colors.blue),
-            Container(color:Colors.green),
-            Container(color:Colors.purple),
+            CategoryItem()
           ],
         )),
-        floatingActionButton: FloatingActionButton.extended(
-            onPressed: () => Navigator.pop(context),
-            label: Text("Back"),
-            icon: Icon(Icons.arrow_back)));
+);
   }
 }
