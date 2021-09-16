@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({Key? key}) : super(key: key);
+  final IconData categoryIcon;
+  final String categoryName;
+  final Color iconColor;
+  const CategoryItem(
+      {required this.categoryIcon,
+      required this.categoryName,
+      required this.iconColor});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        mainAxisAlignment:MainAxisAlignment.center,
-        children: [
-          Icon(FontAwesomeIcons.ruler,size:40),
-          Text("Length"),
-        ],
+    return InkWell(
+      onTap: () {
+        Navigator.pop(context, categoryName);
+      },
+      child: Card(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(categoryIcon, size: 40, color: iconColor),
+            SizedBox(height: 8.0),
+            Text(categoryName),
+          ],
+        ),
       ),
     );
   }

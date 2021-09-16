@@ -10,17 +10,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var categoryName = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(Constants.appName),
         ),
-        body: Container(),
+        body: Center(child: Container(child: Text(categoryName))),
         floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(context,
+            onPressed: () async {
+              categoryName = await Navigator.push(context,
                   MaterialPageRoute(builder: (context) => CategoryPage()));
+                  setState(() {
+
+                  });
+
             },
             child: Icon(Icons.add)));
   }
