@@ -12,13 +12,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List unitsList = ["cm", "m", "mm"];
+  List<String> unitsList = ["cm", "m", "mm"];
   var fromUnit = "cm";
   var toUnit = "cm";
   var categoryName = "";
   final TextEditingController inputController = TextEditingController();
   final TextEditingController outputController = TextEditingController();
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,10 +28,12 @@ class _HomePageState extends State<HomePage> {
         body: Center(
             child: Container(
                 margin: EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
+                child: Column(children: [
                   TextField(
-                    controller:inputController,
+                  onChanged:(input){
+                    startConversion();
+                  } ,
+                    controller: inputController,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                     inputFormatters: <TextInputFormatter>[
@@ -43,20 +45,33 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(8.0)),
                         hintText: 'Enter Your Number'),
                   ),
-                  UnitsList(
+                UnitsList(
                     key:UniqueKey(),
                     selectedUnit: fromUnit,
                     units: unitsList,
                     onTap: (selectedUnit) {
                       fromUnit = selectedUnit;
-
                     },
                   ),
+                  /* DropdownButton<String>(
+                    hint:Text(fromUnit),
+                    items: unitsList.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (selectedUnit) {
+                      setState(() {
+                      fromUnit = selectedUnit!;
+                      }); 
+                    },
+                  ), */
                   Spacer(),
                   Icon(Icons.arrow_downward, size: 40),
                   Spacer(),
                   UnitsList(
-                    key:UniqueKey(),
+                    key: UniqueKey(),
                     selectedUnit: toUnit,
                     units: unitsList,
                     onTap: (selectedUnit) {
@@ -65,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                   TextField(
-                    controller:outputController,
+                    controller: outputController,
                     showCursor: false,
                     readOnly: true,
                     decoration: InputDecoration(
@@ -85,32 +100,37 @@ class _HomePageState extends State<HomePage> {
             child: Icon(Icons.add)));
   }
 
-  startConversion(){
-    if(inputController.text.isNotEmpty){
-      if(fromUnit == toUnit){
+  startConversion() {
+    if (inputController.text.isNotEmpty) {
+      if (fromUnit == toUnit) {
         outputController.text = inputController.text;
-      }else if(fromUnit == "cm" && toUnit == "m"){
+      } else if (fromUnit == "cm" && toUnit == "m") {
         cmToMConversion();
       }
     }
   }
 
-  cmToMConversion(){
-    outputController.text = (double.parse(inputController.text)/100).toString();
+  String format(double n){
+    return n.toStringAsFixed(n.truncateToDouble() == n ? 0:2);
   }
 
-  switchCategory(){
-    switch(categoryName){
+  cmToMConversion() {
+    outputController.text =
+        format(double.parse(inputController.text) / 100);
+  }
+
+  switchCategory() {
+    switch (categoryName) {
       case "Length":
-      fromUnit = "cm";
-      toUnit = "cm";
-      unitsList = ["cm", "m", "mm"];
-      break;
+        fromUnit = "cm";
+        toUnit = "cm";
+        unitsList = ["cm", "m", "mm"];
+        break;
       case "Area":
-      fromUnit = "cm\u00B2";
-      toUnit = "cm\u00B2";
-      unitsList = ["cm\u00B2", "m\u00B2", "mm\u00B2"];
-      break;
+        fromUnit = "cm\u00B2";
+        toUnit = "cm\u00B2";
+        unitsList = ["cm\u00B2", "m\u00B2", "mm\u00B2"];
+        break;
     }
   }
 }

@@ -43,6 +43,7 @@ class _UnitsListState extends State<UnitsList> {
                 });
               },
               child: Container(
+                width:80.0,
                   margin: EdgeInsets.all(8.0),
                   padding:
                       EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
